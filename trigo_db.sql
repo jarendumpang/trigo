@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 03, 2026 at 02:39 PM
+-- Generation Time: Nov 04, 2026 at 12:52 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -72,7 +72,7 @@ INSERT INTO `franchises` (`franchise_id`, `franchise_name`, `owner_name`, `locat
 CREATE TABLE `franchise_application` (
   `id` int(11) NOT NULL,
   `full_name` varchar(255) NOT NULL,
-  `number` int(11) NOT NULL,
+  `number` int(12) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `op_address` varchar(255) NOT NULL,
@@ -85,17 +85,14 @@ CREATE TABLE `franchise_application` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `income_overview`
+-- Table structure for table `income`
 --
 
-CREATE TABLE `income_overview` (
-  `ride_id` int(11) NOT NULL,
-  `rider_id` int(11) NOT NULL,
-  `passenger_name` varchar(100) DEFAULT NULL,
-  `fare_amount` decimal(10,2) NOT NULL,
-  `commission_percent` decimal(5,2) DEFAULT 15.00,
-  `ride_date` datetime NOT NULL,
-  `status` enum('completed','cancelled') DEFAULT 'completed'
+CREATE TABLE `income` (
+  `id` int(11) NOT NULL,
+  `total_income` int(11) NOT NULL,
+  `Rider_earnings` int(11) NOT NULL,
+  `Company_income` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -108,8 +105,8 @@ CREATE TABLE `pending_applications` (
   `app_id` int(11) NOT NULL,
   `applicant_name` varchar(100) NOT NULL,
   `application_type` enum('rider','franchise') NOT NULL,
-  `contact_number` varchar(20) DEFAULT NULL,
-  `application_date` datetime DEFAULT current_timestamp(),
+  `contact_number` int(12) NOT NULL,
+  `application_date` date NOT NULL,
   `status` enum('pending','reviewed','approved','rejected') DEFAULT 'pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -122,9 +119,9 @@ CREATE TABLE `pending_applications` (
 CREATE TABLE `riders` (
   `rider_id` int(11) NOT NULL,
   `full_name` varchar(100) NOT NULL,
-  `contact_number` varchar(20) DEFAULT NULL,
+  `contact_number` int(12) NOT NULL,
   `status` enum('active','inactive','pending') DEFAULT 'active',
-  `date_joined` datetime DEFAULT current_timestamp()
+  `date_joined` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -136,11 +133,11 @@ CREATE TABLE `riders` (
 CREATE TABLE `rider_application` (
   `id` int(11) NOT NULL,
   `full_name` varchar(255) NOT NULL,
-  `number` int(11) NOT NULL,
+  `number` int(12) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `licence_num` int(11) NOT NULL,
-  `license_exp` datetime NOT NULL,
+  `license_num` int(20) NOT NULL,
+  `license_exp` date NOT NULL,
   `model` varchar(255) NOT NULL,
   `plate_number` varchar(255) NOT NULL,
   `valid_id` blob NOT NULL
@@ -155,9 +152,10 @@ CREATE TABLE `rider_application` (
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `full_name` varchar(255) NOT NULL,
-  `number` int(11) NOT NULL,
+  `number` int(12) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL,
+  `role` enum('admin','rider','user') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -184,10 +182,10 @@ ALTER TABLE `franchise_application`
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- Indexes for table `income_overview`
+-- Indexes for table `income`
 --
-ALTER TABLE `income_overview`
-  ADD PRIMARY KEY (`ride_id`);
+ALTER TABLE `income`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `pending_applications`
@@ -238,10 +236,10 @@ ALTER TABLE `franchise_application`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `income_overview`
+-- AUTO_INCREMENT for table `income`
 --
-ALTER TABLE `income_overview`
-  MODIFY `ride_id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `income`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `pending_applications`

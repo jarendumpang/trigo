@@ -1,13 +1,13 @@
 <?php
 session_start();
-include "config/database.php";
+include "../config/database.php";
 
 //send the user to correct dashboard
 if(isset($_SESSION["role"])){
     if(($_SESSION["role"]) == "admin"){
         header("Location: admin/admin.php");
     }
-    else {
+    else  if($_SESSION(["role"]) == "rider"){
         header("Location: employee/employee.php");
     }
     else {

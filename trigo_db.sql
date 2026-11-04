@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 04, 2026 at 12:52 AM
+-- Generation Time: Nov 04, 2026 at 05:07 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -91,9 +91,16 @@ CREATE TABLE `franchise_application` (
 CREATE TABLE `income` (
   `id` int(11) NOT NULL,
   `total_income` int(11) NOT NULL,
-  `Rider_earnings` int(11) NOT NULL,
-  `Company_income` int(11) NOT NULL
+  `rider_earnings` int(11) NOT NULL,
+  `company_income` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `income`
+--
+
+INSERT INTO `income` (`id`, `total_income`, `rider_earnings`, `company_income`) VALUES
+(1, 25000, 5000, 20000);
 
 -- --------------------------------------------------------
 
@@ -142,6 +149,15 @@ CREATE TABLE `rider_application` (
   `plate_number` varchar(255) NOT NULL,
   `valid_id` blob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `rider_application`
+--
+
+INSERT INTO `rider_application` (`id`, `full_name`, `number`, `email`, `password`, `license_num`, `license_exp`, `model`, `plate_number`, `valid_id`) VALUES
+(1, 'Zean Pacho', 2147483647, 'zeanpacho@gmail.com', '$2y$10$K/5K6UJShSvyDMRDrCSpj.jVTNzqrgesNoaXnpaLe8CcsYbOvOCTe', 2147483647, '2026-11-03', 'motorstar', 'abc 123', ''),
+(2, 'shawn ', 123132331, 'shawn@gmail.com', '$2y$10$BhScYLQ0VBEnGuhXam/HqO1oC13VSAY/IOkeSgs7.0it4jZBT9432', 2147483647, '2026-11-28', 'tmx', '123 abc', 0x526f626c6f7853637265656e53686f7432303236313032385f3134353833333730372e706e67),
+(3, 'adriane', 990093131, 'adriane@gmail.com', '$2y$10$xKoOL9wp8ppN.PQbobSLZe9HOw.frUis7vn4pSMCD9S1Elitro5Ne', 12313331, '2026-11-20', 'bajaj', '2213 ddc', 0x526f626c6f7853637265656e53686f7432303236313033305f3233323631393832302e706e67);
 
 -- --------------------------------------------------------
 
@@ -239,7 +255,7 @@ ALTER TABLE `franchise_application`
 -- AUTO_INCREMENT for table `income`
 --
 ALTER TABLE `income`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `pending_applications`
@@ -257,7 +273,7 @@ ALTER TABLE `riders`
 -- AUTO_INCREMENT for table `rider_application`
 --
 ALTER TABLE `rider_application`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`

@@ -75,7 +75,7 @@ session_start();
         <a href="../index.html#how">How It Works</a>
         <a href="franchise.html">Tricycle Franchising</a>
         <a href="apply.html">Apply as a Rider</a>
-        <a class="button outline" href="login.php">Log in ↗</a>
+        <a class="button outline" href="login.html">Log in ↗</a>
       </nav>
     </header>
     <div class="card formbox">

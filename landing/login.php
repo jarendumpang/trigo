@@ -5,9 +5,10 @@ include "../config/database.php";
 //send the user to correct dashboard
 if(isset($_SESSION["role"])){
     if(($_SESSION["role"]) == "admin"){
-        header("Location: admin/admin.php");
+        header("Location:  ../admin/admin.php");
+        exit;
     }
-    else  if($_SESSION(["role"]) == "rider"){
+    else if($_SESSION["role"] == "rider"){
         header("Location: employee/employee.php");
     }
     else {
@@ -17,23 +18,23 @@ if(isset($_SESSION["role"])){
 }
 $error = "";
 
-if(isset($_POST["login"])){
-    $username = mysqli_real_escape_string($conn,$_POST["username"]);
+if(isset($_POST["submit"])){
+    $email = mysqli_real_escape_string($conn,$_POST["email"]);
     $password = $_POST["password"];
     
     //Find typed username
-    $sql = "SELECT * FROM users WHERE email = '$username' LIMIT 1";
+    $sql = "SELECT * FROM users WHERE email='$email' LIMIT 1";
     $result = mysqli_query($conn, $sql);
     if(mysqli_num_rows($result) == 1){
         $user = mysqli_fetch_assoc($result);
 
-        if(password_verify($password, $user["password"])){
-            $_SESSION["user_id"] = $user["id"];
+        if($user && password_verify($password, $user["password"])){
+            $_SESSION["id"] = $user["id"];
             $_SESSION["full_name"] = $user["full_name"];
             $_SESSION["role"] = $user["role"];
 
             if($user["role"] == "admin"){
-                header("Location: admin/");
+                header("Location: ../admin/admin.php");
             }
            
         }
@@ -75,21 +76,30 @@ if(isset($_POST["login"])){
         <div class="eyebrow">WELCOME BACK</div>
         <h2>Let’s get you moving.</h2>
         <p>Choose a demo role to explore your dashboard.</p>
-
+        <?php if($error != ""){?>
+                    <div class="alert alert-danger"><?php echo $error;?></div>
+        <?php }?>
         <!-- PHP integration: add action/method and server validation; UI preview never sends data. -->
-        <form form-method="POST">
+      <form method="POST">
           <label>Email address</label>
-          <input type="email" value="username" required />
-          <label>Password</label>
-          <input type="password" value="password" required />
-          <label>Demo account</label>
-          <select id="role">
-            <option value="admin">Administrator</option>
-            <option value="rider">Approved rider</option>
-            <option value="customer">Customer</option>
-            <option value="status">Pending rider applicant</option>
-          </select>
-          <button class="full" type="submit" name="login">Login →</button>
+          <input
+              type="email" class="form-control" name="email" required placeholder="you@example.com"
+          />
+
+        <label>Password</label>
+        <input
+            type="password"
+            class="form-control"
+            name="password" required
+        />
+              <label>Demo account</label>
+              <select id="role" name="role">
+                <option value="admin">Administrator</option>
+                <option value="rider">Approved rider</option>
+                <option value="customer">Customer</option>
+                <option value="status">Pending rider applicant</option>
+              </select>
+              <button class="full" type="submit" name="submit">Login →</button>
         </form>
         <a class="button text" href="reset-password.html">Forgot password?</a>
         <p>

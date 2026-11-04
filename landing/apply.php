@@ -11,10 +11,11 @@ session_start();
         $phone = $_POST["phone"];
         $email = $_POST["email"];
         $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
-        $licence_num = $_POST["licence_num"];
-        $licence_exp = $_POST["licence_exp"];
+        $license_num = $_POST["license_num"];
+        $license_exp = $_POST["license_exp"];
         $model = $_POST["model"];
         $plate_number = $_POST["plate_number"];
+        $valid_id = $_POST["valid_id"];
 
         // SQL Command to insert record
         $sql = "INSERT INTO rider_application(
@@ -22,91 +23,34 @@ session_start();
                         `number`,
                         `email`,
                         `password`,
-                        `licence_num`,
-                        `licence_exp`,
+                        `license_num`,
+                        `license_exp`,
                         `model`,
-                        `plate_number`
+                        `plate_number`,
+                        valid_id
                         ) 
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                        VALUES (
+                        '$name',
+                        '$phone',
+                        '$email',
+                        '$password',
+                        '$license_num',
+                        '$license_exp',
+                        '$model',
+                        '$plate_number',
+                        '$valid_id'
+                        )";
 
-        $stmt = mysqli_prepare($conn, $sql);
-
-        if($stmt){
-
-            mysqli_stmt_bind_param(
-                $stmt,
-                "ssssssss",
-                $name,
-                $phone,
-                $email,
-                $password,
-                $licence_num,
-                $licence_exp,
-                $model,
-                $plate_number
-            );
-
-            if(mysqli_stmt_execute($stmt)){
-                header("Location: ../index.html?message=" . urlencode("Rider Record Added Successfully"));
-                exit;
-            }                
-            else{
-                $message = "Could not save Rider record!";
-            }
-
-            mysqli_stmt_close($stmt);
-
-        }
-        else{
-            $message = "Database query failed!";
-        }
+      if(mysqli_query($conn, $sql)){
+        header("Location: ../index.html?message=Rider Application sent successfully");
+        exit;
+      }
+      else{
+        $message = "Failed to sent";
+      }
+        
     }
-    // session_start();
-    // include "../config/database.php";
-    
-    // $message = "";
-
-    // if(isset($_POST["submit"])){
-      
-    //     $name = $_POST["name"];
-    //     $phone =  $_POST["phone"];
-    //     $email = $_POST["email"];
-    //     $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
-    //     $licence_num = $_POST["licence_num"];
-    //     $licence_exp = $_POST["licence_exp"];
-    //     $model = $_POST["model"];
-    //     $plate_number = $_POST["plate_number"];
-
-     
-    //     $sql = "INSERT INTO rider_application(
-    //                     `full_name`,
-    //                     `number`,
-    //                     `email`,
-    //                     `password`,
-    //                     `licence_num`,
-    //                     `licence_exp`,
-    //                     `model`,
-    //                     `plate_number`
-    //                     ) 
-    //                     VALUES (
-    //                    '$name',
-    //                     '$phone',
-    //                     '$email',
-    //                     '$password',
-    //                     '$licence_num',
-    //                     '$licence_exp',
-    //                     '$model',
-    //                     '$plate_number'
-    //                     )";            
-
-    //     if(mysqli_query($conn, $sql)){
-    //         header("Location: index.html?message=Rider Record Added Successfully");
-    //         exit;
-    //     }                
-    //     else{
-    //         $message = "Could not save Rider record!";
-    //     }
-    // }
+   
 ?>
 <!doctype html>
 <html lang="en">
@@ -162,11 +106,11 @@ session_start();
         <label>Driver’s license number</label>
         <input type="text"
         class="form-control"
-        name="licence_num" required>
+        name="license_num" required>
         <div class="grid split">
           <div>
             <label>License expiry</label>
-            <input type="date" name = "licence_exp" required>
+            <input type="date" name = "license_exp" required>
           </div>
           <div>
             <label>Vehicle model</label>
@@ -175,8 +119,8 @@ session_start();
         </div>
         <label>Plate number</label>
         <input type="text" name = "plate_number" required placeholder="ABC 1234">
-        <!-- <label>Driver’s license, valid ID, and vehicle OR/CR</label>
-        <input type="file" accept=".pdf,.png,.jpg,.jpeg" name="valid_id" multiple> -->
+        <label>Driver’s license, valid ID, and vehicle OR/CR</label>
+        <input type="file" accept=".pdf,.png,.jpg,.jpeg" name="valid_id" multiple>
         <div class="notice">Use sample files only. Files are not uploaded. Rider and franchise approval are independent.
         </div>
         <label class="row">

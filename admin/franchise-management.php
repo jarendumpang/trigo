@@ -1,3 +1,15 @@
+<?php 
+  session_start();
+  include "../config/database.php";
+
+  if(!isset($_SESSION["role"]) || $_SESSION["role"] != "admin"){
+    header("Location: ../index.php");
+    exit;
+  }
+
+  $sql = "SELECT * FROM franchise";
+  $result = mysqli_query($conn, $sql);
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -83,26 +95,16 @@
                     </tr>
                   </thead>
                   <tbody>
+                    <?php while($row = mysqli_fetch_assoc($result)) {?>
                     <tr>
-                      <td>TG-2026-001</td>
-                      <td>Maria Villanueva</td>
-                      <td>Bajaj RE · ABC 1234</td>
-                      <td>Jan 12, 2026</td>
-                      <td>Jan 12, 2027</td>
-                      <td>
-                        
-                      </td>
+                      <td><?php echo htmlspecialchars("TG-" . str_pad((string)$row["franchise_id"], 3, "0", STR_PAD_LEFT));?></td>
+                      <td><?php echo htmlspecialchars($row["operator"]);?></td>
+                      <td><?php echo htmlspecialchars($row["assigned_vehicle"]);?></td>
+                      <td><?php echo htmlspecialchars($row["issue_date"]);?></td>
+                      <td><?php echo htmlspecialchars($row["expiry_date"]);?></td>
+                      <td><?php echo htmlspecialchars($row["status"]);?></td>
                     </tr>
-                    <tr>
-                      <td>TG-2026-002</td>
-                      <td>Jose Mendoza</td>
-                      <td>TVS King · DEF 5678</td>
-                      <td>Nov 20, 2025</td>
-                      <td>Nov 20, 2026</td>
-                      <td>
-                       
-                      </td>
-                    </tr>
+                    <?php }?>
                   </tbody>
                 </table>
               </div>

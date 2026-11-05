@@ -1,3 +1,8 @@
+<?php 
+  session_start();
+  include "config/database.php";
+
+?>
 <!doctype html>
 <html lang="en">
   <head>

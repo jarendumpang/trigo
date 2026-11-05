@@ -1,5 +1,5 @@
 <?php
-session_start();
+    session_start();
     include "../config/database.php";
     
     $message = "";
@@ -42,7 +42,7 @@ session_start();
                         )";
 
       if(mysqli_query($conn, $sql)){
-        header("Location: ../index.html?message=Rider Application sent successfully");
+        header("Location: ../index.php?message=Rider Application sent successfully");
         exit;
       }
       else{

@@ -88,13 +88,6 @@ if(isset($_POST["login"])){
           <input type="email" name="email" required />
           <label>Password</label>
           <input type="password" name="password" required />
-          <label>Demo account</label>
-          <select id="role">
-            <option value="admin">Administrator</option>
-            <option value="rider">Approved rider</option>
-            <option value="customer">Customer</option>
-            <option value="status">Pending rider applicant</option>
-          </select>
           <button class="full" type="submit" name="login">Login →</button>
         </form>
         <a class="button text" href="reset-password.php">Forgot password?</a>

@@ -5,38 +5,37 @@ include "../config/database.php";
 //send the user to correct dashboard
 if(isset($_SESSION["role"])){
     if(($_SESSION["role"]) == "admin"){
-        header("Location: admin/admin.php");
+        header("Location: ../admin/admin.php");
+        exit;
     }
     else  if($_SESSION(["role"]) == "rider"){
         header("Location: employee/employee.php");
     }
     else {
         header("Location: users/user.php");
-    exit;
     }
 }
 $error = "";
 
 if(isset($_POST["login"])){
-    $username = mysqli_real_escape_string($conn,$_POST["username"]);
+    $email = mysqli_real_escape_string($conn,$_POST["email"]);
     $password = $_POST["password"];
     
     //Find typed username
-    $sql = "SELECT * FROM users WHERE email = '$username' LIMIT 1";
+    $sql = "SELECT * FROM users WHERE email = '$email' LIMIT 1";
     $result = mysqli_query($conn, $sql);
     if(mysqli_num_rows($result) == 1){
         $user = mysqli_fetch_assoc($result);
 
-        if(password_verify($password, $user["password"])){
             $_SESSION["user_id"] = $user["id"];
             $_SESSION["full_name"] = $user["full_name"];
             $_SESSION["role"] = $user["role"];
 
             if($user["role"] == "admin"){
-                header("Location: admin/");
+                header("Location: ../admin/admin.php");
             }
            
-        }
+  
     }
     $error = "Invalid Username or Password";    
 
@@ -66,9 +65,9 @@ if(isset($_POST["login"])){
         <nav>
           <a href="../index.php">Overview</a>
           <a href="../index.php#how">How It Works</a>
-          <a href="franchise.html">Tricycle Franchising</a>
-          <a href="apply.html">Apply as a Rider</a>
-          <a class="button outline" href="login.html">Log in ↗</a>
+          <a href="franchise.php">Tricycle Franchising</a>
+          <a href="apply.php">Apply as a Rider</a>
+          <a class="button outline" href="login.php">Log in ↗</a>
         </nav>
       </header>
       <div class="card formbox">
@@ -77,11 +76,11 @@ if(isset($_POST["login"])){
         <p>Choose a demo role to explore your dashboard.</p>
 
         <!-- PHP integration: add action/method and server validation; UI preview never sends data. -->
-        <form form-method="POST">
+        <form method="POST">
           <label>Email address</label>
-          <input type="email" value="username" required />
+          <input type="email" name="email" required />
           <label>Password</label>
-          <input type="password" value="password" required />
+          <input type="password" name="password" required />
           <label>Demo account</label>
           <select id="role">
             <option value="admin">Administrator</option>
@@ -91,10 +90,10 @@ if(isset($_POST["login"])){
           </select>
           <button class="full" type="submit" name="login">Login →</button>
         </form>
-        <a class="button text" href="reset-password.html">Forgot password?</a>
+        <a class="button text" href="reset-password.php">Forgot password?</a>
         <p>
           New to TriGo?
-          <a style="color: var(--g)" href="register.html"
+          <a style="color: var(--g)" href="register.php"
             >Create a customer account</a
           >
         </p>

@@ -10,7 +10,7 @@
   $pending_app = mysqli_query($conn, "SELECT app_id FROM pending_applications");
   $reg_franchise = mysqli_query($conn, "SELECT franchise_id FROM franchises");
   $active_riders = mysqli_query($conn, "SELECT rider_id FROM riders");
-  $completed_rides = mysqli_query($conn, "SELECT ride_id FROM completed_rides")
+  $completed_rides = mysqli_query($conn, "SELECT ride_id FROM completed_rides");
 
   $income = mysqli_query($conn, "SELECT SUM(total_income) AS total FROM income");
   $income_row = mysqli_fetch_assoc($income);
@@ -20,9 +20,9 @@
   $rider_row = mysqli_fetch_assoc($rider_earnings);
   $rider_earnings = (int)$rider_row['total'];
 
-  $company_income = mysqli_query($conn, "SELECT SUM(company_income) AS TOTAL FROM income");
+  $company_income = mysqli_query($conn, "SELECT SUM(company_income) AS total FROM income");
   $company_row = mysqli_fetch_assoc($company_income);
-  $company_income =(int)$company_row['total'];
+  $company_income = (int)$company_row['total'];
 
 
 ?>
@@ -44,31 +44,31 @@
     <div id="app">
       <div class="app">
         <aside class="sidebar">
-          <a class="logo" href="../index.html">
+          <a class="logo" href="../index.php">
             <span class="mark">↗</span>TriGo<b>.</b>
           </a>
           <div class="eyebrow" style="padding-left: 14px; color: #9baa9b">
             WORKSPACE
           </div>
-          <a class="sideitem active" href="admin.html"> <span>◫</span>Overview</a>
-          <a class="sideitem" href="rider-applications.html">
+          <a class="sideitem active" href="admin.php"> <span>◫</span>Overview</a>
+          <a class="sideitem" href="rider-applications.php">
             <span>♧</span>Rider Applications<span class="badge amber">3</span>
           </a>
-          <a class="sideitem" href="franchise-management.html">
+          <a class="sideitem" href="franchise-management.php">
             <span>▤</span>Franchise Management</a>
-          <a class="sideitem" href="employees.html"> <span>♙</span>Employees</a>
-          <a class="sideitem" href="rides.html"> <span>↗</span>Rides</a>
-          <a class="sideitem" href="income-reports.html">
+          <a class="sideitem" href="employees.php"> <span>♙</span>Employees</a>
+          <a class="sideitem" href="rides.php"> <span>↗</span>Rides</a>
+          <a class="sideitem" href="income-reports.php">
             <span>▥</span>Income Reports</a>
-          <a class="sideitem" href="fare-settings.html">
+          <a class="sideitem" href="fare-settings.php">
             <span>⚙</span>Fare Settings</a>
-          <a class="sideitem" href="settings.html"> <span>☷</span>Settings</a>
+          <a class="sideitem" href="settings.php"> <span>☷</span>Settings</a>
           <div class="sidebottom">
             <div class="notice">
               <strong>Here for your community.</strong>
               <br />A smoother day starts with TriGo.
             </div>
-            <a class="sideitem" href="../index.html">↶ Back to website</a>
+            <a class="sideitem" href="../index.php">↶ Back to website</a>
             <div class="row">
               <div class="avatar">G3</div>
               <div>
@@ -211,11 +211,11 @@
                   <h3>Income overview</h3>
                   <span class="badge">Sample figures</span>
                 </div>
-                <div class="stat"><?php echo intval($income);?></div>
+                <div class="stat"><?php echo $income;?></div>
                 <span class="small muted">Total customer fares · weekly</span>
                 <div class="line">
                   <span>Rider earnings</span>
-                  <strong><?php echo intval($rider_earnings)?></strong>
+                  <strong><?php echo $rider_earnings?></strong>
                 </div>
                 <div class="line">
                   <span>Company income</span>

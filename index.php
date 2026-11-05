@@ -18,14 +18,14 @@
     <div id="app">
       <header>
         <a class="logo"
-           href="index.html"><span class="mark">↗</span>TriGo<b>.</b></a>
+           href="index.php"><span class="mark">↗</span>TriGo<b>.</b></a>
         <nav>
-          <a href="index.html">Overview</a>
-          <a href="index.html#how">How It Works</a>
+          <a href="index.php">Overview</a>
+          <a href="index.php#how">How It Works</a>
 
-          <a href="landing/franchise.html">Tricycle Franchising</a>
-          <a href="landing/apply.html">Apply as a Rider</a>
-          <a class="button outline" href="landing/login.html">Log in ↗</a>
+          <a href="landing/franchise.php">Tricycle Franchising</a>
+          <a href="landing/apply.php">Apply as a Rider</a>
+          <a class="button outline" href="landing/login.php">Log in ↗</a>
         </nav>
       </header>
       <section class="hero">
@@ -41,7 +41,7 @@
             livelihood, and keep your community moving.
           </p>
           <div class="row">
-            <a class="button " href="user/user.html">Book a Ride ↗</a><a class="button outline" href="landing/apply.html">
+            <a class="button " href="user/user.php">Book a Ride ↗</a><a class="button outline" href="landing/apply.php">
               Apply as a Rider
             </a>
           </div>
@@ -53,65 +53,6 @@
         <div class="trike">
           <img src="Philippine Tricycle Infographic Ride.png" alt="" >
         </div>
-        <!-- <div class="scene">
-          <svg
-            viewBox="0 0 560 360"
-            role="img"
-            aria-label="Green TriGo tricycle on a neighborhood road"
-          >
-            <circle cx="450" cy="65" r="37" fill="#f6d365" />
-            <path
-              d="M0 245L70 180 125 210 200 145 280 235 400 160 560 230V360H0"
-              fill="#bfd5b7"
-            />
-            <path
-              d="M0 330Q250 240 560 335"
-              fill="none"
-              stroke="#f9fcf3"
-              stroke-width="50"
-            />
-            <g stroke="#183e2e" stroke-width="6">
-              <circle cx="177" cy="279" r="33" fill="#183e2e" />
-              <circle cx="177" cy="279" r="15" fill="#cfe2cd" />
-              <circle cx="397" cy="279" r="33" fill="#183e2e" />
-              <circle cx="397" cy="279" r="15" fill="#cfe2cd" />
-              <path
-                d="M134 254V145Q134 130 152 130H300L344 226 416 241V265H222L205 242Z"
-                fill="#0a8b5c"
-              />
-              <path d="M154 148H229V217H154Z" fill="#e1f0dd" />
-              <path d="M247 148H286L315 214H247Z" fill="#b7dbc3" />
-              <path d="M127 124H302L310 141H127Z" fill="#f6d365" />
-              <path d="M343 227L365 164H389M367 164L397 251" fill="none" />
-            </g>
-            <rect x="156" y="230" width="70" height="20" rx="5" fill="white" />
-            <text
-              x="168"
-              y="245"
-              fill="#087f5b"
-              font-family="sans-serif"
-              font-weight="bold"
-            >
-              TriGo
-            </text>
-            <path
-              d="M65 270V180M480 270V170"
-              stroke="#618657"
-              stroke-width="9"
-            />
-            <circle cx="65" cy="160" r="34" fill="#88ac77" />
-            <circle cx="480" cy="150" r="39" fill="#88ac77" />
-          </svg>
-          <div class="floating row">
-            <span class="icon">✓</span>
-            <div>
-              <strong>A little closer to where you belong.</strong><br /><span
-                class="muted small"
-                >Local rides. Lasting opportunities.</span
-              >
-            </div>
-          </div>
-        </div> -->
       </section>
 
       <section class="section">
@@ -128,7 +69,7 @@
               Your everyday destinations, one easy ride away. See your fare
               before you go.
             </p>
-            <a class="button text" href="user/user.html">
+            <a class="button text" href="user/user.php">
               Book your first ride →
             </a>
           </div>
@@ -139,7 +80,7 @@
               Turn familiar roads into new opportunities. Ride on your terms,
               earn with confidence.
             </p>
-            <a class="button text" href="landing/apply.html">
+            <a class="button text" href="landing/apply.php">
               Start your application →
             </a>
           </div>
@@ -150,7 +91,7 @@
               Manage applications, vehicles, and renewals in one organized
               place.
             </p>
-            <a class="button text" href="landing/franchise.html">
+            <a class="button text" href="landing/franchise.php">
               Explore franchising →
             </a>
           </div>
@@ -193,7 +134,7 @@
               tracking.
             </p>
           </div>
-          <a class="button " href="landing/franchise.html">
+          <a class="button " href="landing/franchise.php">
             Explore franchising ↗
           </a>
         </div>
@@ -202,7 +143,7 @@
       <footer class="footer">
         <div>
           <a class="logo"
-             href="index.html"><span class="mark">↗</span>TriGo<b>.</b></a>
+             href="index.php"><span class="mark">↗</span>TriGo<b>.</b></a>
           <p>Your community. Your ride.</p>
         </div>
         <div>

@@ -17,9 +17,9 @@
     <div id="app">
       <header>
         <a class="logo"
-           href="../index.html"><span class="mark">↗</span>TriGo<b>.</b></a>
+           href="../index.php"><span class="mark">↗</span>TriGo<b>.</b></a>
         <nav>
-          <a class="button text" href="../employee/employee.html">Rider preview</a><a class="button text" href="../admin/admin.html">Admin</a><a class="button outline" href="../index.html">Log out</a>
+          <a class="button text" href="../employee/employee.php">Rider preview</a><a class="button text" href="../admin/admin.php">Admin</a><a class="button outline" href="../index.php">Log out</a>
         </nav>
       </header>
       <div class="phonearea">
@@ -93,9 +93,7 @@
             <p>A familiar ride, just a few taps away.</p>
             
 <!-- PHP integration: add action/method and server validation; UI preview never sends data. -->
-<form data-frontend-form
-             
-            >
+            <form method="POST">
               <label>● Pickup location</label
               ><input
                 id="pickup"
@@ -124,8 +122,8 @@
         </div>
       </div>
       <div class="bottomnav">
-        <a class="button text" href="user.html">⌂ Book a ride</a><a class="button text" href="history.html">
-          ◷ History</a><a class="button text" href="profile.html">♙ Profile</a>
+        <a class="button text" href="user.php">⌂ Book a ride</a><a class="button text" href="history.php">
+          ◷ History</a><a class="button text" href="profile.php">♙ Profile</a>
       </div>
     </div>
     

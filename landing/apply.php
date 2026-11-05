@@ -67,15 +67,15 @@ session_start();
 <body>
   <div id="app">
     <header>
-      <a class="logo" href="../index.html">
+      <a class="logo" href="../index.php">
         <span class="mark">↗</span>TriGo<b>.</b>
       </a>
       <nav>
-        <a href="../index.html">Overview</a>
-        <a href="../index.html#how">How It Works</a>
-        <a href="franchise.html">Tricycle Franchising</a>
-        <a href="apply.html">Apply as a Rider</a>
-        <a class="button outline" href="login.html">Log in ↗</a>
+        <a href="../index.php">Overview</a>
+        <a href="../index.php#how">How It Works</a>
+        <a href="franchise.php">Tricycle Franchising</a>
+        <a href="apply.php">Apply as a Rider</a>
+        <a class="button outline" href="login.php">Log in ↗</a>
       </nav>
     </header>
     <div class="card formbox">

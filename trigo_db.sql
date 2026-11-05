@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 05, 2026 at 01:41 PM
+-- Generation Time: Nov 04, 2026 at 05:07 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -40,25 +40,28 @@ CREATE TABLE `completed_rides` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `franchise`
+-- Table structure for table `franchises`
 --
 
-CREATE TABLE `franchise` (
+CREATE TABLE `franchises` (
   `franchise_id` int(11) NOT NULL,
-  `operator` varchar(255) NOT NULL,
-  `assigned_vehicle` varchar(255) NOT NULL,
-  `issue_date` date NOT NULL,
-  `expiry_date` date NOT NULL,
-  `status` enum('active','expire') NOT NULL
+  `franchise_name` varchar(100) NOT NULL,
+  `owner_name` varchar(100) DEFAULT NULL,
+  `location` varchar(150) NOT NULL,
+  `contact_number` varchar(20) DEFAULT NULL,
+  `date_registered` datetime DEFAULT current_timestamp(),
+  `status` enum('active','inactive','pending') DEFAULT 'active'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `franchise`
+-- Dumping data for table `franchises`
 --
 
-INSERT INTO `franchise` (`franchise_id`, `operator`, `assigned_vehicle`, `issue_date`, `expiry_date`, `status`) VALUES
-(1, 'jaren', 'tmx ', '2026-11-03', '2026-11-06', 'active'),
-(2, 'shawn', 'bajaj', '2026-11-09', '2026-11-01', 'expire');
+INSERT INTO `franchises` (`franchise_id`, `franchise_name`, `owner_name`, `location`, `contact_number`, `date_registered`, `status`) VALUES
+(1, 'San Isidro Main Branch', 'ralph ong', 'San Isidro, Pampanga', '09632567978', '2026-11-03 21:14:04', 'active'),
+(2, 'Apalit Service Hub', 'jaren dumpang', 'Apalit, Pampanga', '096547987', '2026-11-03 21:14:04', 'active'),
+(3, 'Mabalacat Terminal', NULL, 'Mabalacat, Pampanga', NULL, '2026-11-03 21:14:04', 'active'),
+(4, 'Angeles City Office', NULL, 'Angeles City, Pampanga', NULL, '2026-11-03 21:14:04', 'active');
 
 -- --------------------------------------------------------
 
@@ -144,20 +147,17 @@ CREATE TABLE `rider_application` (
   `license_exp` date NOT NULL,
   `model` varchar(255) NOT NULL,
   `plate_number` varchar(255) NOT NULL,
-  `valid_id` blob NOT NULL,
-  `submitted_at` date NOT NULL DEFAULT current_timestamp()
+  `valid_id` blob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `rider_application`
 --
 
-INSERT INTO `rider_application` (`id`, `full_name`, `number`, `email`, `password`, `license_num`, `license_exp`, `model`, `plate_number`, `valid_id`, `submitted_at`) VALUES
-(1, 'Zean Pacho', 2147483647, 'zeanpacho@gmail.com', '$2y$10$K/5K6UJShSvyDMRDrCSpj.jVTNzqrgesNoaXnpaLe8CcsYbOvOCTe', 2147483647, '2026-11-03', 'motorstar', 'abc 123', '', '2026-11-05'),
-(2, 'shawn ', 123132331, 'shawn@gmail.com', '$2y$10$BhScYLQ0VBEnGuhXam/HqO1oC13VSAY/IOkeSgs7.0it4jZBT9432', 2147483647, '2026-11-28', 'tmx', '123 abc', 0x526f626c6f7853637265656e53686f7432303236313032385f3134353833333730372e706e67, '2026-11-05'),
-(3, 'adriane', 990093131, 'adriane@gmail.com', '$2y$10$xKoOL9wp8ppN.PQbobSLZe9HOw.frUis7vn4pSMCD9S1Elitro5Ne', 12313331, '2026-11-20', 'bajaj', '2213 ddc', 0x526f626c6f7853637265656e53686f7432303236313033305f3233323631393832302e706e67, '2026-11-05'),
-(4, 'john vincent natividad', 22554455, 'natividad@gmail.com', '$2y$10$m5g1nXLhM9tG.P7W/7Gavud40zc2o1xzjRbagzP5wXu.1YJjrjxxG', 123123131, '2026-11-26', 'click', 'ads 213', '', '2026-11-05'),
-(6, 'natividad', 19932131, 'john@gmail.com', '$2y$10$tmEvXe35DhuDik7sstgfG.xzvSDbkfBv7Oj1Bf76KEjYbf5pjx5Cu', 2147483647, '2026-11-23', 'click', 'ads 211', '', '2026-11-05');
+INSERT INTO `rider_application` (`id`, `full_name`, `number`, `email`, `password`, `license_num`, `license_exp`, `model`, `plate_number`, `valid_id`) VALUES
+(1, 'Zean Pacho', 2147483647, 'zeanpacho@gmail.com', '$2y$10$K/5K6UJShSvyDMRDrCSpj.jVTNzqrgesNoaXnpaLe8CcsYbOvOCTe', 2147483647, '2026-11-03', 'motorstar', 'abc 123', ''),
+(2, 'shawn ', 123132331, 'shawn@gmail.com', '$2y$10$BhScYLQ0VBEnGuhXam/HqO1oC13VSAY/IOkeSgs7.0it4jZBT9432', 2147483647, '2026-11-28', 'tmx', '123 abc', 0x526f626c6f7853637265656e53686f7432303236313032385f3134353833333730372e706e67),
+(3, 'adriane', 990093131, 'adriane@gmail.com', '$2y$10$xKoOL9wp8ppN.PQbobSLZe9HOw.frUis7vn4pSMCD9S1Elitro5Ne', 12313331, '2026-11-20', 'bajaj', '2213 ddc', 0x526f626c6f7853637265656e53686f7432303236313033305f3233323631393832302e706e67);
 
 -- --------------------------------------------------------
 
@@ -175,15 +175,6 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `full_name`, `number`, `email`, `password`, `role`) VALUES
-(1, 'jaren dumpang', 223365656, 'jaren@gmail.com', 'jaren123', 'admin'),
-(2, 'zean pacho', 66552233, 'zean@gmail.com', 'zean123', 'rider'),
-(3, 'shawn genese ', 966332554, 'shawn@gmail.com', 'shawn123', 'user');
-
---
 -- Indexes for dumped tables
 --
 
@@ -194,9 +185,9 @@ ALTER TABLE `completed_rides`
   ADD PRIMARY KEY (`ride_id`);
 
 --
--- Indexes for table `franchise`
+-- Indexes for table `franchises`
 --
-ALTER TABLE `franchise`
+ALTER TABLE `franchises`
   ADD PRIMARY KEY (`franchise_id`);
 
 --
@@ -249,10 +240,10 @@ ALTER TABLE `completed_rides`
   MODIFY `ride_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `franchise`
+-- AUTO_INCREMENT for table `franchises`
 --
-ALTER TABLE `franchise`
-  MODIFY `franchise_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `franchises`
+  MODIFY `franchise_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `franchise_application`
@@ -282,13 +273,13 @@ ALTER TABLE `riders`
 -- AUTO_INCREMENT for table `rider_application`
 --
 ALTER TABLE `rider_application`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

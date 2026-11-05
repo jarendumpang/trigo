@@ -8,7 +8,7 @@
   } 
 
   $pending_app = mysqli_query($conn, "SELECT app_id FROM pending_applications");
-  $reg_franchise = mysqli_query($conn, "SELECT franchise_id FROM franchise");
+  $reg_franchise = mysqli_query($conn, "SELECT franchise_id FROM franchises");
   $active_riders = mysqli_query($conn, "SELECT rider_id FROM riders");
   $completed_rides = mysqli_query($conn, "SELECT ride_id FROM completed_rides");
 

@@ -1,3 +1,58 @@
+<?php
+
+  session_start();
+  include "../config/database.php";
+
+  if(!isset($_SESSION["role"]) || $_SESSION["role"] != "admin"){
+    header("Location: ../index.php");
+    exit;
+  } 
+
+  $base_fare = mysqli_query($conn, "SELECT SUM(base_fare) AS base_fare FROM fare_settings");
+  $income_row = mysqli_fetch_assoc($base_fare);
+  $base_fare = (int)$income_row['base_fare'];
+
+  $included_distance = mysqli_query($conn, "SELECT SUM(included_distance) AS included_distance FROM fare_settings");
+  $income_row = mysqli_fetch_assoc($included_distance);
+  $included_distance = (int)$income_row['included_distance'];
+
+  $per_km_rate = mysqli_query($conn, "SELECT SUM(per_km_rate) AS per_km_rate FROM fare_settings");
+  $income_row = mysqli_fetch_assoc($per_km_rate);
+  $per_km_rate = (int)$income_row['per_km_rate'];
+
+  $company_commission = mysqli_query($conn, "SELECT SUM(company_commission) AS company_commission FROM fare_settings");
+  $income_row = mysqli_fetch_assoc($company_commission);
+  $company_commission = (int)$income_row['company_commission'];
+
+
+  $message = "";
+
+    if(isset($_POST["update"])){
+        $base_fare= $_POST["base_fare"];
+        $included= $_POST["included"];
+        $pk_rate= $_POST["pk_rate"];
+        $company_commission=$_POST["company_commission"];
+
+        $sql = "UPDATE fare_settings SET base_fare= '$base_fare',
+                                included_distance = '$included ',
+                                per_km_rate= '$pk_rate',
+                                company_commission='$company_commission'
+                               ";
+
+
+        if(mysqli_query($conn, $sql)){
+            header("Location: fare-settings.php");
+            exit;
+        }
+        else{
+            $message = "Could not Update";
+        }
+ 
+    }
+
+
+?>
+
 
 <!doctype html>
 <html lang="en">
@@ -72,17 +127,19 @@
             </div>
 
             <!-- PHP integration: add action/method and server validation; UI preview never sends data. -->
-            <form data-frontend-form class="card" style="max-width: 650px">
+            <form data-frontend-form method="POST" class="card" style="max-width: 650px">
               <div class="grid split">
                 <div>
                   <label>Base fare (PHP)</label>
                   <input
                     id="base"
                     type="number"
+                    name="base_fare"
                     min="0"
                     step="0.1"
                     required
-                    value="25"
+                    value="<?php echo $base_fare; ?>"
+                    
                   />
                 </div>
                 <div>
@@ -90,10 +147,11 @@
                   <input
                     id="included"
                     type="number"
+                    name="included"
                     min="0"
                     step="0.1"
                     required
-                    value="1"
+                    value="<?php echo $included_distance; ?>"
                   />
                 </div>
                 <div>
@@ -101,10 +159,11 @@
                   <input
                     id="rate"
                     type="number"
+                    name="pk_rate"
                     min="0"
                     step="0.1"
                     required
-                    value="10"
+                    value="<?php echo $per_km_rate; ?>"
                   />
                 </div>
                 <div>
@@ -112,11 +171,12 @@
                   <input
                     id="commission"
                     type="number"
+                    name="company_commission"
                     min="0"
                     max="100"
                     step="0.1"
                     required
-                    value="15"
+                    value="<?php echo $company_commission; ?>"
                   />
                 </div>
               </div>
@@ -124,7 +184,7 @@
                 Fare = base fare + max(0, route km − included km) × rate.<br />3.8
                 km example → ₱53. Revised prices require customer confirmation.
               </div>
-              <button type="button" data-fare-preview>
+              <button type="submit" name="update" data-fare-preview>
                 Review & save rates
               </button>
             </form>

@@ -19,7 +19,7 @@
         <a class="logo"
            href="../index.php"><span class="mark">↗</span>TriGo<b>.</b></a>
         <nav>
-          <a class="button text" href="../user/user.php">Customer preview</a><a class="button text" href="../admin/admin.php">Admin</a><a class="button outline" href="../index.php">Log out</a>
+        <a class="button outline" href="../logout.php">Log out</a>
         </nav>
       </header>
       <div class="phonearea">

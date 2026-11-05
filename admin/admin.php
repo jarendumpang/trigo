@@ -68,7 +68,7 @@
               <strong>Here for your community.</strong>
               <br />A smoother day starts with TriGo.
             </div>
-            <a class="sideitem" href="../index.php">↶ Back to website</a>
+            <!-- <a class="sideitem" href="../logout.php">↶ Back to website</a> -->
             <div class="row">
               <div class="avatar">G3</div>
               <div>
@@ -85,8 +85,6 @@
             <div class="row">
               <span class="small muted">San Isidro, Philippines</span>
               <span class="avatar">G3</span>
-              <a class="button outline" href="../users/user.php"
-                >↗ Preview app</a>
               <a class="button outline" href="../logout.php">Log out</a>
             </div>
           </div>

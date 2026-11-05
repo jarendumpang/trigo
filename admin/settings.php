@@ -44,9 +44,9 @@
               <strong>Here for your community.</strong>
               <br />A smoother day starts with TriGo.
             </div>
-            <a class="sideitem" href="../index.php">↶ Back to website</a>
+            <!-- <a class="sideitem" href="../index.php">↶ Back to website</a> -->
             <div class="row">
-              <div class="avatar">JD</div>
+              <div class="avatar">G3</div>
               <div>
                 <strong class="small">Jamie dela Cruz</strong>
                 <br />
@@ -60,10 +60,8 @@
             <strong>Settings</strong>
             <div class="row">
               <span class="small muted">San Isidro, Philippines</span>
-              <a class="button outline" href="../user/user.php"
-                >↗ Preview app</a
-              >
-              <span class="avatar">JD</span>
+              <span class="avatar">G3</span>
+              <a class="button outline" href="../logout.php">Log out</a>
             </div>
           </div>
           <div class="content">
@@ -86,7 +84,6 @@
               <button class="" type="button" data-backend-action>
                 Save preferences
               </button>
-              <a class="button outline" href="../index.html">Sign out</a>
             </div>
           </div>
         </main>

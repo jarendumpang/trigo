@@ -46,7 +46,7 @@
             livelihood, and keep your community moving.
           </p>
           <div class="row">
-            <a class="button " href="user/user.php">Book a Ride ↗</a><a class="button outline" href="landing/apply.php">
+            <a class="button " href="users/user.php">Book a Ride ↗</a><a class="button outline" href="landing/apply.php">
               Apply as a Rider
             </a>
           </div>

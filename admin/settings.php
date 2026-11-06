@@ -1,3 +1,14 @@
+<?php 
+  session_start();
+  include "../config/database.php";
+
+  if(!isset($_SESSION["role"]) || $_SESSION["role"] != "admin"){
+    header("Location: ../index.php");
+    exit;
+  } 
+
+  $total = mysqli_query($conn, "SELECT * FROM rider_application");
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -23,7 +34,7 @@
           </div>
           <a class="sideitem" href="admin.php"> <span>◫</span>Overview</a>
           <a class="sideitem" href="rider-applications.php">
-            <span>♧</span>Rider Applications<span class="badge amber">3</span>
+            <span>♧</span>Rider Applications<span class="badge amber"><?php echo mysqli_num_rows($total); ?></span>
           </a>
           <a class="sideitem" href="franchise-management.php">
             <span>▤</span>Franchise Management</a

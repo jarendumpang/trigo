@@ -24,6 +24,8 @@
   $company_row = mysqli_fetch_assoc($company_income);
   $company_income = (int)$company_row['total'];
 
+  $total = mysqli_query($conn, "SELECT * FROM rider_application");
+
 
 ?>
 
@@ -52,7 +54,7 @@
           </div>
           <a class="sideitem active" href="admin.php"> <span>◫</span>Overview</a>
           <a class="sideitem" href="rider-applications.php">
-            <span>♧</span>Rider Applications<span class="badge amber">3</span>
+            <span>♧</span>Rider Applications<span class="badge amber"><?php echo mysqli_num_rows($total); ?></span>
           </a>
           <a class="sideitem" href="franchise-management.php">
             <span>▤</span>Franchise Management</a>

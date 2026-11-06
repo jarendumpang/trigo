@@ -4,10 +4,10 @@ include "../config/database.php";
 
 //send the user to correct dashboard
 if(isset($_SESSION["role"])){
-    if(isset($_SESSION["role"]) == "admin"){
+    if(($_SESSION["role"]) == "admin"){
         header("Location: ../admin/admin.php");
     }
-    else  if(isset($_SESSION["role"]) == "rider"){
+    else  if(($_SESSION["role"]) == "rider"){
         header("Location: ../employee/employee.php");
     }
     else {
@@ -27,7 +27,7 @@ if(isset($_POST["login"])){
     if(mysqli_num_rows($result) == 1){
         $user = mysqli_fetch_assoc($result);
 
-        if(password_verify($password, $user["password"]))
+        if(password_verify($password, $user["password"])){
             $_SESSION["user_id"] = $user["id"];
             $_SESSION["full_name"] = $user["full_name"];
             $_SESSION["role"] = $user["role"];
@@ -41,8 +41,7 @@ if(isset($_POST["login"])){
             else{
               header("Location: ../users/user.php");
             }
-           
-  
+        }
     }
     $error = "Invalid Username or Password";    
 
@@ -62,6 +61,16 @@ if(isset($_POST["login"])){
     />
     <link rel="stylesheet" href="../assets/css/style.css" />
     <script src="../assets/js/ui.js" defer></script>
+
+    <style>
+      .alert-danger {
+        color: #842029;
+        background-color: #f8d7da;
+        border: 1px solid #f5c2c7;
+        padding: 12px;
+        border-radius: 5px;
+     }
+    </style>
   </head>
   <body>
     <div id="app">
@@ -81,6 +90,10 @@ if(isset($_POST["login"])){
         <div class="eyebrow">WELCOME BACK</div>
         <h2>Let’s get you moving.</h2>
         <p>Choose a demo role to explore your dashboard.</p>
+        
+        <?php if($error != "") {?>
+          <div class="alert alert-danger"><?php echo $error;?></div>
+        <?php }?>
 
         <!-- PHP integration: add action/method and server validation; UI preview never sends data. -->
         <form method="POST">

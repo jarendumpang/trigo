@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 06, 2026 at 03:58 PM
+-- Generation Time: Nov 07, 2026 at 05:16 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,40 @@ SET time_zone = "+00:00";
 --
 -- Database: `trigo_db`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bookings`
+--
+
+CREATE TABLE `bookings` (
+  `id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `rider_id` int(11) DEFAULT NULL,
+  `pickup_location` varchar(255) NOT NULL,
+  `dropoff_location` varchar(255) NOT NULL,
+  `distance_km` decimal(8,2) DEFAULT NULL,
+  `fare` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `status` enum('pending','accepted','ongoing','completed','cancelled') DEFAULT 'pending',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `accepted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `bookings`
+--
+
+INSERT INTO `bookings` (`id`, `customer_id`, `rider_id`, `pickup_location`, `dropoff_location`, `distance_km`, `fare`, `status`, `created_at`, `accepted_at`) VALUES
+(1, 1, 1, 'angeles ', 'mabalacat', 2.00, 50.00, 'pending', '2026-11-07 13:54:49', NULL),
+(2, 4, 5, 'angeles', 'mabalacat', 3.80, 65.00, 'accepted', '2026-11-07 14:42:39', '2026-11-07 22:47:25'),
+(3, 4, 5, 'San Isidro Public Market', 'Municipal Hall', 3.80, 65.00, 'accepted', '2026-11-07 14:42:46', '2026-11-07 23:45:29'),
+(4, 4, 5, 'mabalacat', 'angeles', 3.80, 65.00, 'accepted', '2026-11-07 15:48:53', '2026-11-07 23:49:05'),
+(5, 4, 5, 'angeles', 'manila', 3.80, 65.00, 'accepted', '2026-11-07 15:51:49', '2026-11-07 23:51:58'),
+(6, 4, 5, 'manila', 'cebu', 3.80, 65.00, 'accepted', '2026-11-07 16:01:11', '2026-11-08 00:01:17'),
+(7, 4, 5, 'manila', 'olongapo', 3.80, 65.00, 'accepted', '2026-11-07 16:06:21', '2026-11-08 00:06:56'),
+(8, 4, 5, 'bataan', 'zambales', 3.80, 65.00, 'accepted', '2026-11-07 16:08:15', '2026-11-08 00:08:23'),
+(9, 4, 5, 'angeles', 'sanfernando', 3.80, 65.00, 'accepted', '2026-11-07 16:13:09', '2026-11-08 00:13:18');
 
 -- --------------------------------------------------------
 
@@ -201,11 +235,22 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `full_name`, `number`, `email`, `password`, `role`) VALUES
 (1, 'jaren dumpang', 12313131, 'jaren@gmail.com', 'c8734841ee98ef32e2db971c718ef3c3', 'admin'),
 (2, 'shawn genese', 12313313, 'shawn@gmail.com', 'shawn123', 'admin'),
-(3, 'zean pacho', 12313131, 'zean@gmail.com', '$2y$10$RuhCjNg/xP1ezT8zN/o8.ezCK37IKLJmEV.ituBaD7sprDMU3MHSS', 'admin');
+(3, 'zean pacho', 12313131, 'zean@gmail.com', '$2y$10$RuhCjNg/xP1ezT8zN/o8.ezCK37IKLJmEV.ituBaD7sprDMU3MHSS', 'admin'),
+(4, 'adriane', 123131, 'adriane@gmail.com', '$2y$10$GxJr5IAHq8uBN5n4Xwg5xe6x5aHJE79/Zykyj7mRjUKbBgaDB8dI2', 'user'),
+(5, 'john vincent natividad', 1313131311, 'vincent@gmail.com', '$2y$10$sC.shHUIOqfM2n1wipkt2.MSqbvwUXeMg.RXsv2w/j.kHLtA3khh2', 'rider');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `bookings`
+--
+ALTER TABLE `bookings`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_customer` (`customer_id`),
+  ADD KEY `idx_rider` (`rider_id`),
+  ADD KEY `idx_booking_queue` (`status`,`rider_id`,`created_at`);
 
 --
 -- Indexes for table `completed_rides`
@@ -269,6 +314,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `bookings`
+--
+ALTER TABLE `bookings`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
 -- AUTO_INCREMENT for table `completed_rides`
 --
 ALTER TABLE `completed_rides`
@@ -320,7 +371,7 @@ ALTER TABLE `rider_application`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -8,7 +8,7 @@
   } 
 
   $pending_app = mysqli_query($conn, "SELECT app_id FROM pending_applications");
-  $reg_franchise = mysqli_query($conn, "SELECT franchise_id FROM franchise");
+  $reg_franchise = mysqli_query($conn, "SELECT franchise_id FROM franchises");
   $active_riders = mysqli_query($conn, "SELECT rider_id FROM riders");
   $completed_rides = mysqli_query($conn, "SELECT ride_id FROM completed_rides");
 
@@ -23,8 +23,6 @@
   $company_income = mysqli_query($conn, "SELECT SUM(company_income) AS total FROM income");
   $company_row = mysqli_fetch_assoc($company_income);
   $company_income = (int)$company_row['total'];
-
-  $total = mysqli_query($conn, "SELECT * FROM rider_application");
 
 
 ?>
@@ -54,7 +52,7 @@
           </div>
           <a class="sideitem active" href="admin.php"> <span>◫</span>Overview</a>
           <a class="sideitem" href="rider-applications.php">
-            <span>♧</span>Rider Applications<span class="badge amber"><?php echo mysqli_num_rows($total); ?></span>
+            <span>♧</span>Rider Applications<span class="badge amber">3</span>
           </a>
           <a class="sideitem" href="franchise-management.php">
             <span>▤</span>Franchise Management</a>

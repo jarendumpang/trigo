@@ -1,17 +1,3 @@
-<?php 
-  session_start();
-  include "../config/database.php";
-
-  if(!isset($_SESSION["role"]) || $_SESSION["role"] != "admin"){
-    header("Location: ../index.php");
-    exit;
-  }
-
-  $sql = "SELECT * FROM franchise";
-  $result = mysqli_query($conn, $sql);
-
-  $total = mysqli_query($conn, "SELECT * FROM rider_application");
-?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -37,7 +23,7 @@
           </div>
           <a class="sideitem" href="admin.php"> <span>◫</span>Overview</a>
           <a class="sideitem" href="rider-applications.php">
-            <span>♧</span>Rider Applications<span class="badge amber"><?php echo mysqli_num_rows($total); ?></span>
+            <span>♧</span>Rider Applications<span class="badge amber">3</span>
           </a>
           <a class="sideitem active" href="franchise-management.php">
             <span>▤</span>Franchise Management</a
@@ -97,16 +83,26 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <?php while($row = mysqli_fetch_assoc($result)) {?>
                     <tr>
-                      <td><?php echo htmlspecialchars("TG-" . str_pad((string)$row["franchise_id"], 3, "0", STR_PAD_LEFT));?></td>
-                      <td><?php echo htmlspecialchars($row["operator"]);?></td>
-                      <td><?php echo htmlspecialchars($row["assigned_vehicle"]);?></td>
-                      <td><?php echo htmlspecialchars($row["issue_date"]);?></td>
-                      <td><?php echo htmlspecialchars($row["expiry_date"]);?></td>
-                      <td><?php echo htmlspecialchars($row["status"]);?></td>
+                      <td>TG-2026-001</td>
+                      <td>Maria Villanueva</td>
+                      <td>Bajaj RE · ABC 1234</td>
+                      <td>Jan 12, 2026</td>
+                      <td>Jan 12, 2027</td>
+                      <td>
+                        
+                      </td>
                     </tr>
-                    <?php }?>
+                    <tr>
+                      <td>TG-2026-002</td>
+                      <td>Jose Mendoza</td>
+                      <td>TVS King · DEF 5678</td>
+                      <td>Nov 20, 2025</td>
+                      <td>Nov 20, 2026</td>
+                      <td>
+                       
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </div>

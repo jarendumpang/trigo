@@ -1,42 +1,3 @@
-<?php
-    session_start();
-    include "../config/database.php";
-  
-    $message = "";
-
-    if(isset($_POST["register"])){
-        //Get all Data From form.
-        $name = $_POST["name"];
-        $phone = $_POST["phone"];
-        $email = $_POST["email"];
-        $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
-
-        //sql Command to insert record
-        $sql = "INSERT INTO users(
-                        `full_name`,
-                        `number`,
-                        `email`,
-                        password,
-                        role
-                        ) 
-                        VALUES (
-                        '$name',
-                        '$phone',
-                        '$email',
-                        '$password',
-                        'user'       
-                        )";
-
-        if(mysqli_query($conn, $sql)){
-            header("Location: login.php?message=Student Record Added Successfully");
-            exit;
-        }                
-        else{
-            $message = "Could not save student record!";
-        }
-    }
-?>
-
 <!doctype html>
 <html lang="en">
   <head>
@@ -70,33 +31,32 @@
         <p>Your next ride starts here.</p>
 
         <!-- PHP integration: add action/method and server validation; UI preview never sends data. -->
-        <form data-frontend-form method="POST">
+        <form data-frontend-form>
           <div class="grid split">
             <div>
               <label>Full name</label>
-              <input id="name" name="name" required placeholder="Juan dela Cruz" />
+              <input id="name" required placeholder="Juan dela Cruz" />
             </div>
             <div>
               <label>Phone</label>
-              <input type="tel" name="phone" required placeholder="09XX XXX XXXX" />
+              <input type="tel" required placeholder="09XX XXX XXXX" />
             </div>
           </div>
           <label>Email</label>
-          <input type="email" name="email" required placeholder="you@example.com" />
+          <input type="email" required placeholder="you@example.com" />
           <label>Password</label>
           <input
             type="password"
             minlength="8"
             required
             placeholder="At least 8 characters"
-            name="password"
           />
           <label class="row">
             <input style="width: auto; margin: 0" type="checkbox" required /> I
             agree to the demo terms and privacy policy.</label
           >
           <br />
-          <button class="full" type="submit" name="register" data-backend-action>
+          <button class="full" type="button" data-backend-action>
             Create account →
           </button>
         </form>

@@ -1,3 +1,22 @@
+<?php
+session_start();
+include "../config/database.php";
+
+// Search applicants
+$search = "";
+
+if (isset($_GET['search'])) {
+    $search = $_GET['search'];
+}
+
+$sql = "SELECT * FROM rider_application
+        WHERE full_name LIKE '%$search%'";
+
+$result = mysqli_query($conn, $sql);
+
+$total = mysqli_num_rows($result);
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -23,7 +42,7 @@
           </div>
           <a class="sideitem" href="admin.php"> <span>◫</span>Overview</a>
           <a class="sideitem active" href="rider-applications.php">
-            <span>♧</span>Rider Applications<span class="badge amber">3</span>
+            <span>♧</span>Rider Applications<span class="badge amber"><?php echo $total; ?></span>
           </a>
           <a class="sideitem" href="franchise-management.php">
             <span>▤</span>Franchise Management</a
@@ -76,13 +95,22 @@
                   <span class="small muted"
                     >Help our community get on the road.</span
                   >
-                </div>
+              </div>
+              <form method="GET" action="rider-applications.php">
+
                 <input
                   class="search"
-                  aria-label="Search applicants"
-                  placeholder="Search applicants…"
-                  data-filter
-                />
+                  type="text"
+                  name="search"
+                  placeholder="Search applicants..."
+                  value="<?php echo htmlspecialchars($search); ?>"
+              />
+
+              <button type="submit">Search</button>
+
+              <a href="rider-applications.php">Clear</a>
+
+              </form>
               </div>
               <div class="tablewrap">
                 <table>
@@ -97,7 +125,25 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr data-person="miguel santos">
+                    <?php while($row = mysqli_fetch_assoc($result)) {?>
+                    <tr>
+                      <td><?php echo htmlspecialchars($row["full_name"]);?></td>
+                      <td>Rider</td>
+                      <td><?php echo htmlspecialchars($row["submitted_at"]);?></td>
+                      <td>
+                        <button
+                          class="text"
+                          type="button"
+                          data-title="Application documents"
+                          data-message="The original contains 3 sample documents. Connect your PHP endpoint to load the actual applicant files."
+                        >
+                          ▧ 3 documents
+                        </button>
+                      </td>
+                      <td><?php echo htmlspecialchars($row["status"]);?></td>
+                    </tr>
+                    <?php }?>
+                    <!-- <tr data-person="miguel santos">
                       <td>
                         <div class="row">
                           <div class="avatar">MS</div>
@@ -105,7 +151,7 @@
                             <strong>Miguel Santos</strong>
                             <br />
                             <span class="small muted">Bajaj RE · ABC 1234</span>
-                          </div>
+                          </div> 
                         </div>
                       </td>
                       <td>Rider</td>
@@ -192,7 +238,7 @@
                           >Review →</a
                         >
                       </td>
-                    </tr>
+                    </tr> -->
                   </tbody>
                 </table>
               </div>

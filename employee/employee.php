@@ -5,17 +5,17 @@ session_start();
 include "../config/database.php";
 
 // CHECK RIDER LOGIN
-// if (
-//     !isset($_SESSION['user_id']) ||
-//     ($_SESSION['role'] ?? '') !== 'rider'
-// ) {
-//     exit("Unauthorized access. Rider login required.");
-// }
-
-if(!isset($_SESSION["role"]) || $_SESSION["role"] != "rider"){
-  header("Location: ../login.php");
-  exit;
+if (
+    !isset($_SESSION['user_id']) ||
+    ($_SESSION['role'] ?? '') !== 'rider'
+) {
+    exit("Unauthorized access. Rider login required.");
 }
+
+// if(!isset($_SESSION["role"]) || $_SESSION["role"] != "rider"){
+//   header("Location: ../login.php");
+//   exit;
+// }
 
 
 $rider_id = (int) $_SESSION['user_id'];

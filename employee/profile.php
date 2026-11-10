@@ -1,3 +1,19 @@
+<?php
+  session_start();
+  include "../config/database.php";
+
+  if (!isset($_SESSION['user_id']) ||($_SESSION['role'] ?? '') !== 'rider') {
+    exit("Unauthorized access. Rider login required.");
+}
+
+  $profile = mysqli_query($conn, "SELECT * FROM users WHERE role='rider' and id='user_id'");
+  $result = mysqli_fetch_assoc($profile);
+?>
+
+
+
+
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -20,7 +36,7 @@
         <nav>
           <a class="button text" href="../user/user.php">Customer preview</a>
           <a class="button text" href="../admin/admin.php">Admin</a>
-          <a class="button outline" href="../index.php">Log out</a>
+          <a class="button outline" href="../logout.php">Log out</a>
         </nav>
       </header>
       <div class="card formbox">
@@ -28,7 +44,7 @@
         <div class="avatar big">CM</div>
         <br />
         <label>Name</label>
-        <input value="Carlo Mendoza" />
+        <input value="<?php echo ($result[]);?>" />
         <label>Phone</label>
         <input value="09XX XXX 2190" />
         <label>Email</label>

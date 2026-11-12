@@ -97,6 +97,37 @@ $sql = "SELECT
 
 $result = $conn->query($sql);
 
+// GET THIS RIDER'S ACCEPTED BOOKING (for the live map)
+$active_booking = null;
+
+$sql_active = "SELECT
+                   b.id,
+                   b.pickup_location,
+                   b.dropoff_location,
+                   b.distance_km,
+                   u.full_name
+
+               FROM bookings b
+
+               INNER JOIN users u
+                   ON b.customer_id = u.id
+
+               WHERE b.rider_id = ?
+               AND b.status = 'accepted'
+
+               ORDER BY b.accepted_at DESC
+               LIMIT 1";
+
+$stmt_active = $conn->prepare($sql_active);
+
+if ($stmt_active) {
+    $stmt_active->bind_param("i", $rider_id);
+    $stmt_active->execute();
+    $res_active = $stmt_active->get_result();
+    $active_booking = $res_active ? $res_active->fetch_assoc() : null;
+    $stmt_active->close();
+}
+
 ?>
 
 <!doctype html>
@@ -111,6 +142,9 @@ $result = $conn->query($sql);
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap-grid.min.css"
     />
     <link rel="stylesheet" href="../assets/css/style.css" />
+    <?php if ($active_booking): ?>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <?php endif; ?>
     
   <script src="../assets/js/ui.js" defer></script>
 </head>
@@ -405,6 +439,12 @@ $result = $conn->query($sql);
                 stroke-width="5"
               />
             </svg>
+            <?php if ($active_booking): ?>
+            <div id="live-map" style="position:absolute;inset:0;z-index:1;isolation:isolate;"></div>
+            <div id="live-map-status" style="position:absolute;left:12px;bottom:12px;z-index:2;background:#fff;padding:6px 10px;border-radius:8px;font-size:12px;box-shadow:0 1px 4px rgba(0,0,0,.2);">
+              Booking #<?= (int)$active_booking['id'] ?> · Locating route…
+            </div>
+            <?php endif; ?>
             <div class="maplabel">
               ◉ San Isidro <span class="muted"> · Demo map</span>
             </div>
@@ -429,5 +469,112 @@ $result = $conn->query($sql);
   <div id="ui-dialog-content"></div>
   <div class="row"><button type="button" data-close-dialog>Close</button></div>
 </dialog>
+
+<?php if ($active_booking): ?>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+(function () {
+  var booking = <?= json_encode([
+      'id'      => (int)$active_booking['id'],
+      'customer'=> $active_booking['full_name'],
+      'pickup'  => $active_booking['pickup_location'],
+      'dropoff' => $active_booking['dropoff_location'],
+  ], JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
+
+  var statusEl = document.getElementById('live-map-status');
+  function setStatus(t) { if (statusEl) statusEl.textContent = t; }
+
+  var map = L.map('live-map', { zoomControl: true }).setView([15.1450, 120.5887], 13);
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  function geocode(query) {
+    var url = 'https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=ph&q=' +
+              encodeURIComponent(query);
+    return fetch(url, { headers: { 'Accept': 'application/json' } })
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        if (!d || !d.length) { return null; }
+        return [parseFloat(d[0].lat), parseFloat(d[0].lon)];
+      });
+  }
+
+  function pin(latlng, color, label) {
+    return L.circleMarker(latlng, {
+      radius: 10, color: '#fff', weight: 4, fillColor: color, fillOpacity: 1
+    }).addTo(map).bindPopup(label);
+  }
+
+  var pickupPos = null;
+
+  geocode(booking.pickup)
+    .then(function (p) {
+      pickupPos = p;
+      // Nominatim allows ~1 request per second
+      return new Promise(function (res) { setTimeout(res, 1100); });
+    })
+    .then(function () { return geocode(booking.dropoff); })
+    .then(function (dropPos) {
+      if (!pickupPos && !dropPos) {
+        setStatus('Could not locate pickup or drop-off on the map.');
+        return;
+      }
+
+      var bounds = [];
+
+      if (pickupPos) {
+        pin(pickupPos, '#087f5b',
+            '<b>Pickup</b><br>' + escapeHtml(booking.customer) + '<br>' + escapeHtml(booking.pickup));
+        bounds.push(pickupPos);
+      }
+      if (dropPos) {
+        pin(dropPos, '#e5b838', '<b>Drop-off</b><br>' + escapeHtml(booking.dropoff));
+        bounds.push(dropPos);
+      }
+
+      if (pickupPos && dropPos) {
+        var routeUrl = 'https://router.project-osrm.org/route/v1/driving/' +
+          pickupPos[1] + ',' + pickupPos[0] + ';' + dropPos[1] + ',' + dropPos[0] +
+          '?overview=full&geometries=geojson';
+
+        fetch(routeUrl)
+          .then(function (r) { return r.json(); })
+          .then(function (d) {
+            var line;
+            if (d && d.routes && d.routes.length) {
+              line = L.geoJSON(d.routes[0].geometry, {
+                style: { color: '#087f5b', weight: 6, opacity: 0.9 }
+              }).addTo(map);
+              map.fitBounds(line.getBounds(), { padding: [40, 40] });
+              setStatus('Booking #' + booking.id + ' · ' +
+                        (d.routes[0].distance / 1000).toFixed(1) + ' km route');
+            } else {
+              throw new Error('no route');
+            }
+          })
+          .catch(function () {
+            L.polyline([pickupPos, dropPos], { color: '#087f5b', weight: 4, dashArray: '8 8' }).addTo(map);
+            map.fitBounds(bounds, { padding: [40, 40] });
+            setStatus('Booking #' + booking.id + ' · Pickup to drop-off');
+          });
+      } else {
+        map.fitBounds(bounds, { padding: [40, 40], maxZoom: 16 });
+        setStatus('Booking #' + booking.id + ' · Only one location could be found');
+      }
+    })
+    .catch(function () {
+      setStatus('Map lookup failed. Check your connection.');
+    });
+
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+})();
+</script>
+<?php endif; ?>
 </body>
 </html>

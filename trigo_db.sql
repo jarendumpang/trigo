@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 11, 2026 at 10:40 AM
+-- Generation Time: Nov 07, 2026 at 05:16 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -53,14 +53,7 @@ INSERT INTO `bookings` (`id`, `customer_id`, `rider_id`, `pickup_location`, `dro
 (6, 4, 5, 'manila', 'cebu', 3.80, 65.00, 'accepted', '2026-11-07 16:01:11', '2026-11-08 00:01:17'),
 (7, 4, 5, 'manila', 'olongapo', 3.80, 65.00, 'accepted', '2026-11-07 16:06:21', '2026-11-08 00:06:56'),
 (8, 4, 5, 'bataan', 'zambales', 3.80, 65.00, 'accepted', '2026-11-07 16:08:15', '2026-11-08 00:08:23'),
-(9, 4, 5, 'angeles', 'sanfernando', 3.80, 65.00, 'accepted', '2026-11-07 16:13:09', '2026-11-08 00:13:18'),
-(10, 7, 5, 'angeles', 'Municipal Hall', 3.80, 65.00, 'accepted', '2026-11-09 13:07:08', '2026-11-10 07:39:08'),
-(11, 4, 5, 'Angeles, Central Luzon, Philippines', 'Mabalacat, Pampanga, Central Luzon, Philippines', 11.94, 65.00, 'accepted', '2026-11-09 23:40:01', '2026-11-10 07:40:17'),
-(12, 4, 5, 'Remy Street, Villa Teresa Subdivision, Santo Rosario, Angeles, Central Luzon, 1992, Philippines', 'Cristina Drive, Villa Teresa Subdivision, Santo Rosario, Angeles, Central Luzon, 1992, Philippines', 0.61, 65.00, 'accepted', '2026-11-09 23:46:40', '2026-11-10 07:46:44'),
-(13, 4, 5, 'Angeles, Central Luzon, Philippines', 'Museum of Philippine Social History, Santo Entierro Street, Santo Rosario, Angeles, Central Luzon, 1992, Philippines', 0.62, 65.00, 'accepted', '2026-11-10 02:59:55', '2026-11-10 11:00:11'),
-(14, 4, 5, 'Angeles, Central Luzon, Philippines', 'L.P. CAndelaria Pharmacy, MacArthur Highway, Aguso, Santa Ines, San Francisco, Mabalacat, Pampanga, Central Luzon, 2010, Philippines', 11.59, 289.75, 'accepted', '2026-11-10 03:15:01', '2026-11-10 11:16:09'),
-(15, 9, 5, 'Angeles, Central Luzon, Philippines', 'Espada Psychological Consultancy, Santo Entierro Street, Doña Belen Subdivision, Santo Cristo, Angeles, Central Luzon, 1992, Philippines', 1.10, 27.50, 'accepted', '2026-11-10 03:20:40', '2026-11-10 11:21:36'),
-(16, 4, 5, 'Angeles, Central Luzon, Philippines', 'Mabalacat, Pampanga, Central Luzon, Philippines', 11.94, 298.50, 'accepted', '2026-11-10 03:36:05', '2026-11-10 11:36:22');
+(9, 4, 5, 'angeles', 'sanfernando', 3.80, 65.00, 'accepted', '2026-11-07 16:13:09', '2026-11-08 00:13:18');
 
 -- --------------------------------------------------------
 
@@ -97,7 +90,7 @@ CREATE TABLE `fare_settings` (
 --
 
 INSERT INTO `fare_settings` (`id`, `base_fare`, `included_distance`, `per_km_rate`, `company_commission`) VALUES
-(4, 50.00, 500.00, 25.00, 80.00);
+(4, 50.00, 500.00, 100000.00, 80.00);
 
 -- --------------------------------------------------------
 
@@ -218,8 +211,7 @@ INSERT INTO `rider_application` (`id`, `full_name`, `number`, `email`, `password
 (1, 'Zean Pacho', 2147483647, 'zeanpacho@gmail.com', '$2y$10$K/5K6UJShSvyDMRDrCSpj.jVTNzqrgesNoaXnpaLe8CcsYbOvOCTe', 2147483647, '2026-11-03', 'motorstar', 'abc 123', '', '2026-11-06', 'accepted'),
 (2, 'shawn ', 123132331, 'shawn@gmail.com', '$2y$10$BhScYLQ0VBEnGuhXam/HqO1oC13VSAY/IOkeSgs7.0it4jZBT9432', 2147483647, '2026-11-28', 'tmx', '123 abc', 0x526f626c6f7853637265656e53686f7432303236313032385f3134353833333730372e706e67, '2026-11-06', 'accepted'),
 (3, 'adriane', 990093131, 'adriane@gmail.com', '$2y$10$xKoOL9wp8ppN.PQbobSLZe9HOw.frUis7vn4pSMCD9S1Elitro5Ne', 12313331, '2026-11-20', 'bajaj', '2213 ddc', 0x526f626c6f7853637265656e53686f7432303236313033305f3233323631393832302e706e67, '2026-11-06', 'accepted'),
-(4, 'jaren dumpang', 12313131, 'jaren@gmail.com', '$2y$10$SPjQ37ad62gWxyrITkWV6eovmTv3FtWV3/LCAPweQJ4BB4dtdc/hC', 123131, '2026-11-30', 'tmx', 'abc 123', '', '2026-11-06', 'accepted'),
-(5, 'Zean basis', 2147483647, 'audreypacho@gmail.com', '$2y$10$KkGzf.7gbjqpABJLpbVkTu4OHCagAhaug3dKpEkvH8k/HJg2vE4Gm', 2147483647, '2029-06-12', 'motorstar', 'abc 123', 0x57494e5f32303236303831325f30385f32335f35345f50726f2e6a7067, '2026-11-10', 'accepted');
+(4, 'jaren dumpang', 12313131, 'jaren@gmail.com', '$2y$10$SPjQ37ad62gWxyrITkWV6eovmTv3FtWV3/LCAPweQJ4BB4dtdc/hC', 123131, '2026-11-30', 'tmx', 'abc 123', '', '2026-11-06', 'accepted');
 
 -- --------------------------------------------------------
 
@@ -245,12 +237,7 @@ INSERT INTO `users` (`id`, `full_name`, `number`, `email`, `password`, `role`) V
 (2, 'shawn genese', 12313313, 'shawn@gmail.com', 'shawn123', 'admin'),
 (3, 'zean pacho', 12313131, 'zean@gmail.com', '$2y$10$RuhCjNg/xP1ezT8zN/o8.ezCK37IKLJmEV.ituBaD7sprDMU3MHSS', 'admin'),
 (4, 'adriane', 123131, 'adriane@gmail.com', '$2y$10$GxJr5IAHq8uBN5n4Xwg5xe6x5aHJE79/Zykyj7mRjUKbBgaDB8dI2', 'user'),
-(5, 'john vincent natividad', 1313131311, 'vincent@gmail.com', '$2y$10$sC.shHUIOqfM2n1wipkt2.MSqbvwUXeMg.RXsv2w/j.kHLtA3khh2', 'rider'),
-(6, 'zeanbasis', 963256757, 'zeanpacho7@gmail.com', 'zeanbasis', 'admin'),
-(7, 'audreybasis', 990093131, 'zeanpacho56@gmail.com', '$2y$10$4mkJ/lzPiUqm..VD.zTvXO6fl35Ytw4bGTVlDOggnO3LZCtNwfeTi', 'user'),
-(8, 'ralph ong', 231313313, 'ralph@gmail.com', '$2y$10$OKQX3p0pkwHqiQOhhblJ6eKiQGqPJ8oghKxTyMu4fmnHRN7e7AsWy', 'rider'),
-(9, 'edwingarcia', 2147483647, 'edwin@gmail.com', '$2y$10$SUq/pG31UhcmhET1tfsTaekXvlNX5AHNjookh7yujxXdiz8miQdbK', 'user'),
-(10, 'zianpacho', 2147483647, 'basis@mail.com', '$2y$10$7p8HmvT4Bb28BLLKadX8kuzDn23fiLQaaripjGCq0JveS/9cvNVcq', 'admin');
+(5, 'john vincent natividad', 1313131311, 'vincent@gmail.com', '$2y$10$sC.shHUIOqfM2n1wipkt2.MSqbvwUXeMg.RXsv2w/j.kHLtA3khh2', 'rider');
 
 --
 -- Indexes for dumped tables
@@ -330,7 +317,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `completed_rides`
@@ -378,13 +365,13 @@ ALTER TABLE `riders`
 -- AUTO_INCREMENT for table `rider_application`
 --
 ALTER TABLE `rider_application`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

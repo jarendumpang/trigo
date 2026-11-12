@@ -8,9 +8,7 @@
 
   $profile = mysqli_query($conn, "SELECT * FROM users WHERE role='rider' and id='user_id'");
   $result = mysqli_fetch_assoc($profile);
-?>
-
-
+?>  
 
 
 
@@ -44,7 +42,7 @@
         <div class="avatar big">CM</div>
         <br />
         <label>Name</label>
-        <input value="<?php echo ($result[]);?>" />
+        <input value="<?php echo ($result);?>" />
         <label>Phone</label>
         <input value="09XX XXX 2190" />
         <label>Email</label>

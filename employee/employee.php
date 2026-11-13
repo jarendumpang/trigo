@@ -525,7 +525,7 @@ if ($stmt_active) {
       var bounds = [];
 
       if (pickupPos) {
-        pin(pickupPos, '#087f5b',
+        pin(pickupPos, '#143027',
             '<b>Pickup</b><br>' + escapeHtml(booking.customer) + '<br>' + escapeHtml(booking.pickup));
         bounds.push(pickupPos);
       }

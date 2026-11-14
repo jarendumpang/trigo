@@ -42,13 +42,13 @@
         <div class="avatar big">CM</div>
         <br />
         <label>Name</label>
-        <input value="<?php echo ($result);?>" />
+        <input value="<?php echo htmlspecialchars($result['full_name']); ?>" />
         <label>Phone</label>
-        <input value="09XX XXX 2190" />
+        <input value="<?php echo htmlspecialchars($result['phone']); ?>" />
         <label>Email</label>
-        <input type="email" value="alex@trigo.example" />
+        <input type="email" value="<?php echo htmlspecialchars($result['email']); ?>" />
         <label>Vehicle</label>
-        <input value="Bajaj RE · ABC 1234" />
+        <input value="<?php echo htmlspecialchars($result['vehicle']); ?>" />
         <span class="badge">Rider approved</span>
         <span class="badge amber">Franchise approval separate</span>
         <br />

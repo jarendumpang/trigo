@@ -19,42 +19,37 @@
 
         // SQL Command to insert record
         $sql = "INSERT INTO rider_application(
-            `full_name`,
-            `number`,
-            `email`,
-            `password`,
-            `license_num`,
-            `license_exp`,
-            `model`,
-            `plate_number`,
-            `valid_id`,
-            `status`
-        )
-        VALUES (
-            '$name',
-            '$phone',
-            '$email',
-            '$password',
-            '$license_num',
-            '$license_exp',
-            '$model',
-            '$plate_number',
-            '$valid_id',
-            'pending'
-        )";
+                        `full_name`,
+                        `number`,
+                        `email`,
+                        `password`,
+                        `license_num`,
+                        `license_exp`,
+                        `model`,
+                        `plate_number`,
+                        valid_id
+                        ) 
+                        VALUES (
+                        '$name',
+                        '$phone',
+                        '$email',
+                        '$password',
+                        '$license_num',
+                        '$license_exp',
+                        '$model',
+                        '$plate_number',
+                        '$valid_id'
+                        )";
 
-    if(mysqli_query($conn, $sql)){
-
-    // Application submitted successfully.
-    // No email will be sent during registration.
-
-    header("Location: ../index.php?message=" . urlencode("Application submitted successfully!"));
-    exit;
-
-    } else {
-        $message = "Failed to submit application.";
+      if(mysqli_query($conn, $sql)){
+        header("Location: ../index.php?message=Rider Application sent successfully");
+        exit;
+      }
+      else{
+        $message = "Failed to sent";
+      }
+        
     }
- }
    
 ?>
 <!doctype html>

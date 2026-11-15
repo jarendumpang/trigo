@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 07, 2026 at 05:16 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Generation Time: Nov 15, 2026 at 08:50 PM
+-- Server version: 10.11.16-MariaDB
+-- PHP Version: 8.3.36
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -54,6 +54,22 @@ INSERT INTO `bookings` (`id`, `customer_id`, `rider_id`, `pickup_location`, `dro
 (7, 4, 5, 'manila', 'olongapo', 3.80, 65.00, 'accepted', '2026-11-07 16:06:21', '2026-11-08 00:06:56'),
 (8, 4, 5, 'bataan', 'zambales', 3.80, 65.00, 'accepted', '2026-11-07 16:08:15', '2026-11-08 00:08:23'),
 (9, 4, 5, 'angeles', 'sanfernando', 3.80, 65.00, 'accepted', '2026-11-07 16:13:09', '2026-11-08 00:13:18');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `booking_messages`
+--
+
+CREATE TABLE `booking_messages` (
+  `id` int(11) NOT NULL,
+  `booking_id` int(11) NOT NULL,
+  `sender_id` int(11) NOT NULL,
+  `sender_type` enum('customer','rider','admin') NOT NULL,
+  `message` text NOT NULL,
+  `sent_at` timestamp NULL DEFAULT current_timestamp(),
+  `is_read` tinyint(1) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -175,12 +191,24 @@ CREATE TABLE `pending_applications` (
 --
 
 CREATE TABLE `riders` (
+  `id` int(11) NOT NULL,
   `rider_id` int(11) NOT NULL,
-  `full_name` varchar(100) NOT NULL,
-  `contact_number` int(12) NOT NULL,
-  `status` enum('active','inactive','pending') DEFAULT 'active',
-  `date_joined` date NOT NULL
+  `full_name` varchar(255) NOT NULL,
+  `number` varchar(30) DEFAULT NULL,
+  `email` varchar(255) NOT NULL,
+  `license_num` varchar(50) DEFAULT NULL,
+  `license_exp` date NOT NULL,
+  `model` varchar(255) NOT NULL,
+  `plate_number` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `riders`
+--
+
+INSERT INTO `riders` (`id`, `rider_id`, `full_name`, `number`, `email`, `license_num`, `license_exp`, `model`, `plate_number`) VALUES
+(1, 13, 'jaypee', '2147483647', 'jaypeepaminutan98@gmail.com', '541210846', '2026-12-03', 'tmx125', 'T9A832'),
+(3, 15, 'Zean Pacho', '2147483647', 'zeanpacho7@gmail.com', '2147483647', '2026-11-20', 'motorstar123', 'M4T339');
 
 -- --------------------------------------------------------
 
@@ -191,10 +219,10 @@ CREATE TABLE `riders` (
 CREATE TABLE `rider_application` (
   `id` int(11) NOT NULL,
   `full_name` varchar(255) NOT NULL,
-  `number` int(12) NOT NULL,
+  `number` varchar(30) DEFAULT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `license_num` int(20) NOT NULL,
+  `license_num` varchar(50) DEFAULT NULL,
   `license_exp` date NOT NULL,
   `model` varchar(255) NOT NULL,
   `plate_number` varchar(255) NOT NULL,
@@ -208,10 +236,14 @@ CREATE TABLE `rider_application` (
 --
 
 INSERT INTO `rider_application` (`id`, `full_name`, `number`, `email`, `password`, `license_num`, `license_exp`, `model`, `plate_number`, `valid_id`, `submitted_at`, `status`) VALUES
-(1, 'Zean Pacho', 2147483647, 'zeanpacho@gmail.com', '$2y$10$K/5K6UJShSvyDMRDrCSpj.jVTNzqrgesNoaXnpaLe8CcsYbOvOCTe', 2147483647, '2026-11-03', 'motorstar', 'abc 123', '', '2026-11-06', 'accepted'),
-(2, 'shawn ', 123132331, 'shawn@gmail.com', '$2y$10$BhScYLQ0VBEnGuhXam/HqO1oC13VSAY/IOkeSgs7.0it4jZBT9432', 2147483647, '2026-11-28', 'tmx', '123 abc', 0x526f626c6f7853637265656e53686f7432303236313032385f3134353833333730372e706e67, '2026-11-06', 'accepted'),
-(3, 'adriane', 990093131, 'adriane@gmail.com', '$2y$10$xKoOL9wp8ppN.PQbobSLZe9HOw.frUis7vn4pSMCD9S1Elitro5Ne', 12313331, '2026-11-20', 'bajaj', '2213 ddc', 0x526f626c6f7853637265656e53686f7432303236313033305f3233323631393832302e706e67, '2026-11-06', 'accepted'),
-(4, 'jaren dumpang', 12313131, 'jaren@gmail.com', '$2y$10$SPjQ37ad62gWxyrITkWV6eovmTv3FtWV3/LCAPweQJ4BB4dtdc/hC', 123131, '2026-11-30', 'tmx', 'abc 123', '', '2026-11-06', 'accepted');
+(1, 'Zean Pacho', '2147483647', 'zeanpacho@gmail.com', '$2y$10$K/5K6UJShSvyDMRDrCSpj.jVTNzqrgesNoaXnpaLe8CcsYbOvOCTe', '2147483647', '2026-11-03', 'motorstar', 'abc 123', '', '2026-11-06', 'accepted'),
+(2, 'shawn ', '123132331', 'shawn@gmail.com', '$2y$10$BhScYLQ0VBEnGuhXam/HqO1oC13VSAY/IOkeSgs7.0it4jZBT9432', '2147483647', '2026-11-28', 'tmx', '123 abc', 0x526f626c6f7853637265656e53686f7432303236313032385f3134353833333730372e706e67, '2026-11-06', 'accepted'),
+(3, 'adriane', '990093131', 'adriane@gmail.com', '$2y$10$xKoOL9wp8ppN.PQbobSLZe9HOw.frUis7vn4pSMCD9S1Elitro5Ne', '12313331', '2026-11-20', 'bajaj', '2213 ddc', 0x526f626c6f7853637265656e53686f7432303236313033305f3233323631393832302e706e67, '2026-11-06', 'accepted'),
+(4, 'jaren dumpang', '12313131', 'jaren@gmail.com', '$2y$10$SPjQ37ad62gWxyrITkWV6eovmTv3FtWV3/LCAPweQJ4BB4dtdc/hC', '123131', '2026-11-30', 'tmx', 'abc 123', '', '2026-11-06', 'accepted'),
+(5, 'jarendumpang', '2147483647', 'jarendumpang@gmail.com', '$2y$10$ieoILgi3.LTya7WFbzZ18uOLmoQkDeHewrJTPTA1U/FYzEP32pGTG', '45420154', '2026-11-18', 'tmx125', 'G9J942', 0x6a7065672d686f6d652e6a7067, '2026-11-13', 'accepted'),
+(6, 'bien barrato', '2147483647', 'bien@gmail.com', '$2y$10$/rqJATFQJSqXmy3pNw4rxe2iH6lv/XPzpHYrEgN1H/l0lPXXE7Fgy', '2147483647', '2026-11-17', 'bajaj 155', 'B1J785', 0x6a7065672d686f6d652e6a7067, '2026-11-13', 'accepted'),
+(13, 'jaypee', '2147483647', 'jaypeepaminutan98@gmail.com', '$2y$10$RKp6.TtLNKgAOXyJmgPay.oVXDynM8RAqwVxDgBZbKN48Bo7rbtM6', '541210846', '2026-12-03', 'tmx125', 'T9A832', 0x6a7065672d686f6d652e6a7067, '2026-11-16', 'accepted'),
+(15, 'Zean Pacho', '2147483647', 'zeanpacho7@gmail.com', '$2y$10$RzI8Dma/APhRa/tjhwkKi.ZPqzZ4j.h7A.gxuYPYni5vChPK/jY3K', '2147483647', '2026-11-20', 'motorstar123', 'M4T339', 0x6a7065672d686f6d652e6a7067, '2026-11-16', 'accepted');
 
 -- --------------------------------------------------------
 
@@ -222,7 +254,7 @@ INSERT INTO `rider_application` (`id`, `full_name`, `number`, `email`, `password
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `full_name` varchar(255) NOT NULL,
-  `number` int(12) NOT NULL,
+  `number` varchar(20) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `role` enum('admin','rider','user') NOT NULL
@@ -233,11 +265,11 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `full_name`, `number`, `email`, `password`, `role`) VALUES
-(1, 'jaren dumpang', 12313131, 'jaren@gmail.com', 'c8734841ee98ef32e2db971c718ef3c3', 'admin'),
-(2, 'shawn genese', 12313313, 'shawn@gmail.com', 'shawn123', 'admin'),
-(3, 'zean pacho', 12313131, 'zean@gmail.com', '$2y$10$RuhCjNg/xP1ezT8zN/o8.ezCK37IKLJmEV.ituBaD7sprDMU3MHSS', 'admin'),
-(4, 'adriane', 123131, 'adriane@gmail.com', '$2y$10$GxJr5IAHq8uBN5n4Xwg5xe6x5aHJE79/Zykyj7mRjUKbBgaDB8dI2', 'user'),
-(5, 'john vincent natividad', 1313131311, 'vincent@gmail.com', '$2y$10$sC.shHUIOqfM2n1wipkt2.MSqbvwUXeMg.RXsv2w/j.kHLtA3khh2', 'rider');
+(1, 'jaren dumpang', '12313131', 'jaren@gmail.com', 'c8734841ee98ef32e2db971c718ef3c3', 'admin'),
+(2, 'shawn genese', '12313313', 'shawn@gmail.com', 'shawn123', 'admin'),
+(3, 'zean pacho', '12313131', 'zean@gmail.com', '$2y$10$RuhCjNg/xP1ezT8zN/o8.ezCK37IKLJmEV.ituBaD7sprDMU3MHSS', 'admin'),
+(4, 'adriane', '123131', 'adriane@gmail.com', '$2y$10$GxJr5IAHq8uBN5n4Xwg5xe6x5aHJE79/Zykyj7mRjUKbBgaDB8dI2', 'user'),
+(5, 'john vincent natividad', '1313131311', 'vincent@gmail.com', '$2y$10$sC.shHUIOqfM2n1wipkt2.MSqbvwUXeMg.RXsv2w/j.kHLtA3khh2', 'rider');
 
 --
 -- Indexes for dumped tables
@@ -251,6 +283,14 @@ ALTER TABLE `bookings`
   ADD KEY `idx_customer` (`customer_id`),
   ADD KEY `idx_rider` (`rider_id`),
   ADD KEY `idx_booking_queue` (`status`,`rider_id`,`created_at`);
+
+--
+-- Indexes for table `booking_messages`
+--
+ALTER TABLE `booking_messages`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `booking_id` (`booking_id`),
+  ADD KEY `sent_at` (`sent_at`);
 
 --
 -- Indexes for table `completed_rides`
@@ -293,7 +333,7 @@ ALTER TABLE `pending_applications`
 -- Indexes for table `riders`
 --
 ALTER TABLE `riders`
-  ADD PRIMARY KEY (`rider_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `rider_application`
@@ -318,6 +358,12 @@ ALTER TABLE `users`
 --
 ALTER TABLE `bookings`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `booking_messages`
+--
+ALTER TABLE `booking_messages`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `completed_rides`
@@ -359,13 +405,13 @@ ALTER TABLE `pending_applications`
 -- AUTO_INCREMENT for table `riders`
 --
 ALTER TABLE `riders`
-  MODIFY `rider_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `rider_application`
 --
 ALTER TABLE `rider_application`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `users`

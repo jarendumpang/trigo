@@ -20,7 +20,7 @@
         // SQL Command to insert record
         $sql = "INSERT INTO rider_application(
                         `full_name`,
-                        `number`,
+                        `contact_number`,
                         `email`,
                         `password`,
                         `license_num`,
